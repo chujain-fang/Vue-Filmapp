@@ -1,32 +1,33 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div  id="app">
+  <router-view></router-view>
+   <tabbar id="btom"></tabbar>
+  
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+ 
+import tabbar from  "./components/tabbar";
+export default {
+ 
+  components:{
+ 
+  tabbar,
     }
-  }
+
 }
+
+</script>
+
+<style scoped>
+/* #btom{position: fixed;top: 375px;} */   
+*{list-style: none;margin: 0;padding: 0;}
+#app{position: relative; height: 667px;width: 375px;   overflow-x: hidden; overflow-y: auto;}
+
+
+</style>
+
+<style src="C:\Users\Administrator\Desktop\电影项目.app\filmapp\font_2564752_qwr96ej34tn\iconfont.css">
+
 </style>

@@ -22,5 +22,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
- 这是第一次提交:第一个版本基本实现了整体的框架,数据来源于第三方获取,适配的是移动端,用浏览器打开请在控制台调整成移动端.
- 完成了基本框架的搭建,已经登陆,注册功能
+
+
+
+第一次版本提交实现功能:满足基本框架搭建,后台数据获取第三方跨域抓取,登陆功能基本实现,通过vuex实现.
