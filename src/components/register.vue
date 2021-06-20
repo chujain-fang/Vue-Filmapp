@@ -1,5 +1,7 @@
 <template>
   <div id="register"   >
+
+     <span class="back"   @click="to"> &lt;&lt;&lt;</span>
       <div class="head">用户注册</div>
      <img src="@/assets/11.png" alt="">
       <form action="" class="form">
@@ -10,22 +12,18 @@
        <span class="mid" ref="mid" >中</span>
        <span class="strong" ref="strong">强</span>
       </form>
-      <div class="register"    v-on:click=transform>注册</div>
+      <div class="register"    v-on:click=transform       >注册</div>
   </div>
 </template>
-
 <script>
-
-
+import { MessageBox } from 'mint-ui';
 export default {
-    data(){
-        return {
-            istrue:false
-        }
-    },
 methods:{
+  to(){
+    this.$router.push("./login")
+  },
+    
     change1(){
-        
         console.log( )
         if(/\d/.test(this.$refs.myvalue1.value[0])){
            this.$refs.value.innerHTML="用户名不能以数字开头!"
@@ -36,54 +34,48 @@ methods:{
             this.$refs.value.style.color="red"
         }
         else if(  this.$refs.myvalue1.value.length<6){
-          
              this.$refs.value.innerHTML="用户名要大于六位!"
               this.$refs.value.style.color="red"
-
         }
         else{
-                var  key1=this.$refs.myvalue1.value;
-                console.log(key1)
-               
-            console.log(110)
-            let  arr=this.$store.state.key_name;
-            console.log(arr)
-            if(arr.length==0){
-                 this.$refs.value.innerHTML="该用户名可注册!"
-              this.$refs.value.style.color="green";
-              this.istrue=true;
+            console.log(this.$refs.myvalue1.value);
+            var  arr=this.$store.state. key_name  //这是数组包裹对象
+            console.log(arr.length)
+            if(arr.length==0){ //"数据库"为空
+             this.$refs.value.innerHTML="该用户名可注册!"
+            this.$refs.value.style.color="green";
+            window.localStorage.setItem("register",1)
             }
-            else{var  count=0
+            else{
+                console.log("else")
+                var   count=0;
                 for(let i=0;i<arr.length;i++){
-                    for(let key in  arr[i]){
-                        
-                        if(key1==arr[i][key]){
-                            count++
-                            console.log("chongmingl");
-                            this.$nextTick(function(){
-                                 this.$refs.value.innerHTML="该用户已被注册!"
-                                                this.$refs.value.style.color="red";
-                                                this.istrue=false; 
-                            })
-                        }
-                        else{
-                            count++
-                        }
-                       
-                          
-                        }
-                        
-                       if(count==arr.length) {
-
-                             this.$refs.value.innerHTML="该用户名可注册!"
-                       this.$refs.value.style.color="green";
-                       this.istrue=true
-   
-                        
-                    }
+                   for(let key in arr[i]){
+                       console.log(key,110);      
+                       console.log(this.$refs.myvalue1.value)
+                       if(key==this.$refs.myvalue1.value){
+                        this.$nextTick(function(){
+                             this.$refs.value.innerHTML="该用户已被注册!"; //血坑
+                             window.localStorage.setItem("register",0)
+                            this.$refs.value.style.color="red"; 
+                        })    
+                       }
+                       else{
+                           count++;
+                           if(count==arr.length){
+                                this.$refs.value.innerHTML="该用户名可注册!"
+                                 this.$refs.value.style.color="green";
+                                  window.localStorage.setItem("register",1)
+                           }
+                       } 
+                   }
                 }
             }
-            
+
+             this.$refs.value.innerHTML="该用户名可注册!"
+            this.$refs.value.style.color="green";
+             window.localStorage.setItem("register",1);
+             
         }
     },
     change2(){
@@ -118,59 +110,73 @@ methods:{
                     
              var name=this.$refs.myvalue1.value;
             var key=this.$refs.myvalue2.value;
-            if(this.$refs.myvalue2.value.length>=6   &&  this.istrue==true){
-
+            if(this.$refs.myvalue2.value.length>=6  &&  this.$refs.value.innerHTML=="该用户名可注册!"){
+                MessageBox({
+        title: '注册成功',
+        message: '去登陆?',
+        showCancelButton: true
+      }) .then(action => {
+        if (action === 'confirm') {
+         this.$router.push("/login")
+        }
+        if (action === 'cancel') {
+          console.log(2)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
                 console.log(this.$refs.myvalue2.value.length)
-                  this.$store.commit("set",{name,key})   
+                  this.$store.commit("set",{name,key})  //这里触发提交账户密码保存到vuex和localstroage
+                 window.localStorage.setItem("account&password",``)
             }
             else{
-                alert("请重新选择用户名/密码")   //检查是否存在当前用户名或者密码,待做
+
+                 MessageBox({
+        title: '用户名或密码不合法',
+       // message: '附件名称?',
+        showCancelButton: true
+      })
+
+                 //检查是否存在当前用户名或者密码,待做
             }
           
                    
                     
                 }, 500);
             }
-      })()
-    // transform(){
-
-    //    debounce()
-    //     var  that =this
-    //    function debounce(){
-    //         let timer=null;
-           
-           
-    //         return function(){
-               
-    //             if(timer){clearTimeout(timer)}
-    //             timer=setTimeout(fn,1000 );
-    //         }
-
-    //    }
-    //    function fn(){
-          
-    //      console.log(111)
-                    
-                
-
-    //    }
-
-      
-           
-
-
-
-       
-      
-    // }
-
-}
-
-
+      })(),
+    //    onclick(){
+    //     MessageBox({
+    //     title: '去登陆？？',
+    //    // message: '附件名称?',
+    //     showCancelButton: true
+    //   }) .then(action => {
+    //     if (action === 'confirm') {
+    //      this.$router.push("/login")
+    //     }
+    //     if (action === 'cancel') {
+    //       console.log(2)
+    //     }
+    //   }).catch(err => {
+    //     console.log(err)
+    //   })
+    // },
+    
+},
+ created(){
+     this.$store.state.showTabbar=false;
+  },
+   beforeRouteLeave (to, from, next) {
+            this.$store.state.showTabbar=true;
+   
+    next()
+        },
 }
 </script>
 
 <style scoped>
+.back{color: rgb(147, 147, 231);display: block;width: 15px;height: 15px;font-size: 15px;line-height: 15px;}
+
 *{margin: 0;padding: 0;}
 .tips{display: block;height: 20px;line-height: 20px;text-align: center;width: 100%;}
     img{width: 60px;height: 60px;margin: auto;display: block; padding: 20px;}

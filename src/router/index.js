@@ -11,6 +11,9 @@ import city  from  "../components/cinema组件/head组件/city.vue"
 import search from "../components/cinema组件/head组件/search.vue"
 import register from "../components/register.vue"
 import  detail  from   "../components/mine/detail.vue"
+import detail2 from '../components/cinema组件/head组件/detail-影院.vue'
+import   a  from  "../components/film/film-detail.vue"
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -28,24 +31,27 @@ const routes = [
     {
       path:"*",
       redirect:"playing"
-    }
-    
-    
-    
-    
+    } 
     ]
    // " "
   },
+{
+path:"/detail/:id",
+component:detail2
+}
+  ,
+  {
+    path:"/a/:filmId", //通过this.$routr.prama可以获取这个参数
+    component: a
+    },
   {
     path: '/cinema',
     component: cinema,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited
-   
   },
   {
-
     path:'/mine',
     component:mine ,
     children:[
@@ -54,8 +60,6 @@ const routes = [
         component:detail
       }
     ]
-
-
   },
   // {
   //   path:'*',
@@ -64,9 +68,7 @@ const routes = [
   {
     path:"/login",
     component:login
-  },
-  
-       
+  },    
   {
     path:"/city",
     component:city
@@ -82,7 +84,6 @@ const routes = [
   component:mine_login
 }
 ]
-
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -90,10 +91,16 @@ const router = new VueRouter({
 })
 // 这是全局守卫
 router.beforeEach((to,from,next)=>{
-    if(to.path==="/mine"){
-     
+    if(to.path==="/mine_login"){
       //这里需要判断登陆
-      if(true){
+      let   stat=window.sessionStorage.getItem("login");
+      stat=Number(stat)
+      console.log(stat)
+     // console.log(stat.length)
+      console.log(typeof stat)
+      
+      if(stat){   //查询登陆状态,这里用localstroage的缺点是一次登陆永久生效.
+        console.log(1111111)
         next()
       }
       else{

@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <div class="cinema">
   
-    <router-view>11</router-view>
-      <heade></heade>
-  
+    <router-view></router-view>  
+        <heade></heade>   
    </div>
 </template>
 
@@ -13,14 +12,8 @@ import heade from "./cinema组件/head"
 
 export default {
   components:{
-
-
-  heade
-   
-
+    heade
       }
-    
-
 }
 </script>
 
@@ -29,4 +22,7 @@ export default {
 </style>
 <style src="C:\Users\Administrator\Desktop\电影项目.app\filmapp\font_2564752_qwr96ej34tn\iconfont.css">
 
+</style>
+<style scoped>
+  .cinema{margin: auto;}
 </style>

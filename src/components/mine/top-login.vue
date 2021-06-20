@@ -6,12 +6,10 @@
       应该做个组件插入 -->  
         <!-- 点击某个组件控制显示隐藏 -->
       <div class="img">  <img src="@/assets/11.png" alt=""> </div>
-        <router-link to="/mine/detail"   tag="div"   class="login">个人中心</router-link>
-     
+        <router-link to="/mine_login"   tag="div"   class="login">个人中心</router-link>
       <div class="null"></div>
   </div>
 </template>
-
 <script>  
 import Menu from "../mine/menu"
 
@@ -26,9 +24,7 @@ export default {
     reset(){
       this.$store.commit("reset1")
     }
-  }
-
-  
+  }  
 }
 </script>
 
